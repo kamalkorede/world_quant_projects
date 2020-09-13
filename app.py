@@ -1,14 +1,21 @@
+import os
+
 from flask import Flask, request
 
-from greet import greet
+from greet import greet, fetch_ip_address
+
+DEPLOY = os.environ.get('DEPLOY')
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def main():
-    ip_address = request.headers['X-Forwarded-For']
-    print(ip_address)
-    print(request.headers)
+    if DEPLOY == 'heroku':
+        ip_address = request.headers['X-Forwarded-For']
+    else:
+        ip_address = fetch_ip_address()()
+
     return greet(ip_address)
     
 

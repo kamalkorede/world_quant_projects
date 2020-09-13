@@ -1,6 +1,9 @@
 import requests
 
-def fetch_ip_address():
+
+
+
+def get_ip_address():
     """Return a string of my IP address."""
     response = requests.get('https://api.ipify.org')
     
@@ -9,7 +12,9 @@ def fetch_ip_address():
 
 def locate_ip_address(ip_address):
     """Return latitude and longitude for a given IP address"""
-    response = requests.get(f'http://ip-api.com/json/{ip_address}')
+    response = requests.get(f'http://ip-api.com/{ip_address}/json',
+                            headers = {'User-Agent': 'Kamal_weather_app'})
+    
     data = response.json()
     
     return data['lat'], data['lon'], data['city'], data['regionName'], data['country']
