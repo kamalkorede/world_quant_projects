@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, request
 
-from greet import greet, fetch_ip_address
+from greet import greet, get_ip_address
 
 DEPLOY = os.environ.get('DEPLOY')
 
@@ -14,7 +14,7 @@ def main():
     if DEPLOY == 'heroku':
         ip_address = request.headers['X-Forwarded-For']
     else:
-        ip_address = fetch_ip_address()()
+        ip_address = get_ip_address()
 
     return greet(ip_address)
     
@@ -26,7 +26,7 @@ def bye():
 
 @app.route('/ask')
 def ask():
-    return "How are you doing"
+    return "How are you doing today?"
 
 
 if __name__ == '__main__':
